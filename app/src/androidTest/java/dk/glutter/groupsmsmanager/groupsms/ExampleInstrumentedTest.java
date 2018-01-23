@@ -26,6 +26,9 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("dk.glutter.groupsmsmanager.groupsms", appContext.getPackageName());
+
+        test_2_formatNumber();
+        test_1_foreignNumber();
     }
 
     public static void test_1_foreignNumber()
@@ -37,11 +40,28 @@ public class ExampleInstrumentedTest {
         assertFalse(stringValidator.isForeignNumber("77889944"));
 
 
+
         assertTrue(stringValidator.isForeignNumber("004177889944"));
         assertTrue(stringValidator.isForeignNumber("004777889944"));
         assertTrue(stringValidator.isForeignNumber("004077889944"));
         assertTrue(stringValidator.isForeignNumber("+4077889944"));
         assertTrue(stringValidator.isForeignNumber("4077889944"));
         assertTrue(stringValidator.isForeignNumber("9944"));
+        assertTrue(stringValidator.isForeignNumber("0000"));
+        assertTrue(stringValidator.isForeignNumber("0"));
+        assertTrue(stringValidator.isForeignNumber(""));
+        assertTrue(stringValidator.isForeignNumber(null));
+    }
+
+    public static void test_2_formatNumber()
+    {
+        StringValidator stringValidator = new StringValidator();
+
+        assertEquals("77885522", StringValidator.formatNumber("004577885522"));
+        assertEquals("77885522", StringValidator.formatNumber("+4577885522"));
+        assertEquals("77885522", StringValidator.formatNumber("123456789077885522"));
+        assertEquals("77885522", StringValidator.formatNumber("00123456789077885522"));
+        assertEquals("77885522", StringValidator.formatNumber("+123456789077885522"));
+        assertEquals("77885522", StringValidator.formatNumber("+33"));
     }
 }

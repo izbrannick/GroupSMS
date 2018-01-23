@@ -45,7 +45,7 @@ public class StringValidator {
         return b;
     }
 
-    private static String formatNumber(String number)
+    public static String formatNumber(String number)
     {
         String formattedNumber = "";
         int length = number.length();
