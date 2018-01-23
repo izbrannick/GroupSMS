@@ -7,6 +7,10 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
+import dk.glutter.groupsmsmanager.groupsms.SMS.SmsHandler;
+import dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator;
+
 import static org.junit.Assert.*;
 
 /**
@@ -22,5 +26,22 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("dk.glutter.groupsmsmanager.groupsms", appContext.getPackageName());
+    }
+
+    public static void test_1_foreignNumber()
+    {
+        StringValidator stringValidator = new StringValidator();
+
+        assertFalse(stringValidator.isForeignNumber("004577889944"));
+        assertFalse(stringValidator.isForeignNumber("+4577889944"));
+        assertFalse(stringValidator.isForeignNumber("77889944"));
+
+
+        assertTrue(stringValidator.isForeignNumber("004177889944"));
+        assertTrue(stringValidator.isForeignNumber("004777889944"));
+        assertTrue(stringValidator.isForeignNumber("004077889944"));
+        assertTrue(stringValidator.isForeignNumber("+4077889944"));
+        assertTrue(stringValidator.isForeignNumber("4077889944"));
+        assertTrue(stringValidator.isForeignNumber("9944"));
     }
 }
