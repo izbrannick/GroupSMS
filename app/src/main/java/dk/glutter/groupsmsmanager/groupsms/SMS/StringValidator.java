@@ -18,7 +18,6 @@ import static dk.glutter.groupsmsmanager.groupsms.StaticDB.words;
 
 public class StringValidator {
 
-
     /**
      * Returns true if number is foreign. Updates currSenderNumber_ number in StaticDB
      * @param number
@@ -110,15 +109,11 @@ public class StringValidator {
 
     public static boolean isGroupMessage(String message)
     {
-        words = null;
         if (!message.isEmpty()) {
             if (message.length() > 1) {
                 String[] splitedMessage = message.split(" ");
                 if (splitedMessage.length > 1) {
-                    words = new ArrayList<>();
-                    for (int i = 0; i < splitedMessage.length; i++)
-                        words.add(splitedMessage[i]);
-                    if (isAGroup(words.get(0))) {
+                    if (isAGroup(splitedMessage[0])) {
                         return true;
                     } else {
                         return false;
@@ -148,19 +143,17 @@ public class StringValidator {
     }
 
     private static boolean isAGroup(String groupName) {
-        if (myGroups_ != null) {
-            if (myGroups_.size() > 0) {
-                for (int i = 0; i < myGroups_.size(); i++) {
-
-                    if (myGroups_.get(i) != null) {
-                        String grName = myGroups_.get(i).getGroupName();
-                        if (grName.length() > 0 && grName.equalsIgnoreCase(groupName)) {
-                            return true;
-                        }
+        if (myGroups_ == null)
+        {return false;}
+        if (myGroups_.size() > 0) {
+            for (int i = 0; i < myGroups_.size(); i++) {
+                if (myGroups_.get(i) != null) {
+                    String grName = myGroups_.get(i).getGroupName();
+                    if (grName.length() > 0 && grName.equalsIgnoreCase(groupName)) {
+                        return true;
                     }
                 }
             }
-
         }
         return false;
     }

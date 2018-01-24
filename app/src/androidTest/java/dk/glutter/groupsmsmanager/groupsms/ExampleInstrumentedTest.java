@@ -4,13 +4,15 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
-import dk.glutter.groupsmsmanager.groupsms.SMS.SmsHandler;
+import java.util.ArrayList;
+
 import dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator;
 
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myGroups_;
 import static org.junit.Assert.*;
 
 /**
@@ -20,10 +22,36 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+
+    public ArrayList myGroups;
+    public Context appContext;
+    public StringValidator stringValidator;
+
+    /**
+     * Creates initial test dependencies
+     */
+    @Before
+    public void setUp()
+    {
+        // Context of the app under test.
+        appContext = InstrumentationRegistry.getTargetContext();
+
+        stringValidator = new StringValidator();
+        myGroups = new ArrayList<>();
+
+        MyGroup groupFoo = new MyGroup("foo");
+        MyGroup groupGASik = new MyGroup("GASik");
+        MyGroup groupBAZ = new MyGroup("BAZ");
+
+        myGroups.add(groupFoo);
+        myGroups.add(groupGASik);
+        myGroups.add(groupBAZ);
+
+        myGroups_ = myGroups;
+    }
+
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("dk.glutter.groupsmsmanager.groupsms", appContext.getPackageName());
 
@@ -31,8 +59,6 @@ public class ExampleInstrumentedTest {
     @Test
     public void test_1_foreignNumber() throws Exception
     {
-        StringValidator stringValidator = new StringValidator();
-
         assertFalse(stringValidator.isForeignNumber("004577889944"));
         assertFalse(stringValidator.isForeignNumber("+4577889944"));
         assertFalse(stringValidator.isForeignNumber("77889944"));
@@ -53,8 +79,6 @@ public class ExampleInstrumentedTest {
     @Test
     public void test_2_formatNumber() throws Exception
     {
-        StringValidator stringValidator = new StringValidator();
-
         assertEquals("77885522", StringValidator.formatNumber("004577885522"));
         assertEquals("77885522", StringValidator.formatNumber("+4577885522"));
         assertEquals("77885522", StringValidator.formatNumber("123456789077885522"));
@@ -64,8 +88,6 @@ public class ExampleInstrumentedTest {
     @Test
     public void test_3_isSignup() throws Exception
     {
-        StringValidator stringValidator = new StringValidator();
-
         assertTrue(StringValidator.isSignup("Tilmeld 0"));
         assertTrue(StringValidator.isSignup("tilmeld 0"));
         assertTrue(StringValidator.isSignup("tilmeld gruppe1"));
@@ -88,8 +110,6 @@ public class ExampleInstrumentedTest {
     @Test
     public void test_4_isResign() throws Exception
     {
-        StringValidator stringValidator = new StringValidator();
-
         assertTrue(StringValidator.isResign("Afmeld fghjkl hjkl"));
         assertTrue(StringValidator.isResign("afmeld fghjkl hjkl"));
         assertTrue(StringValidator.isResign("afmeld fghjkl"));
@@ -110,5 +130,16 @@ public class ExampleInstrumentedTest {
         assertFalse(StringValidator.isResign("AFMELDE"));
         assertFalse(StringValidator.isResign("Afmeld"));
         assertFalse(StringValidator.isResign("AFMELDE mig til gruppen lækæ kælkæalk sæda k 'daælsdk'ad la'sl kd'asldpwapod aæld29u1209 u40u3402u3"));
+    }
+
+    @Test
+    public void test_5_isGroupMessage()
+    {
+        assertTrue(myGroups_.size() == 3);
+
+        assertTrue(stringValidator.isGroupMessage("Foo this is a group message"));
+        assertTrue(stringValidator.isGroupMessage("foo this is a group message"));
+        assertTrue(stringValidator.isGroupMessage("FOO this is a group message"));
+
     }
 }
