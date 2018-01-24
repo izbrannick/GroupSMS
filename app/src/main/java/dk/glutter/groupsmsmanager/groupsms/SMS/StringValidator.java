@@ -113,11 +113,7 @@ public class StringValidator {
             if (message.length() > 1) {
                 String[] splitedMessage = message.split(" ");
                 if (splitedMessage.length > 1) {
-                    if (isAGroup(splitedMessage[0])) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return isAGroup(splitedMessage[0]);
                 }
             }
         }
