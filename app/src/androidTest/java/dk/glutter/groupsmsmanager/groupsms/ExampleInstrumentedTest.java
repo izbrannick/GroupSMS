@@ -27,11 +27,9 @@ public class ExampleInstrumentedTest {
 
         assertEquals("dk.glutter.groupsmsmanager.groupsms", appContext.getPackageName());
 
-        test_2_formatNumber();
-        test_1_foreignNumber();
     }
-
-    public static void test_1_foreignNumber()
+    @Test
+    public void test_1_foreignNumber() throws Exception
     {
         StringValidator stringValidator = new StringValidator();
 
@@ -52,8 +50,8 @@ public class ExampleInstrumentedTest {
         assertTrue(stringValidator.isForeignNumber(""));
         assertTrue(stringValidator.isForeignNumber(null));
     }
-
-    public static void test_2_formatNumber()
+    @Test
+    public void test_2_formatNumber() throws Exception
     {
         StringValidator stringValidator = new StringValidator();
 
@@ -62,6 +60,55 @@ public class ExampleInstrumentedTest {
         assertEquals("77885522", StringValidator.formatNumber("123456789077885522"));
         assertEquals("77885522", StringValidator.formatNumber("00123456789077885522"));
         assertEquals("77885522", StringValidator.formatNumber("+123456789077885522"));
-        assertEquals("77885522", StringValidator.formatNumber("+33"));
+    }
+    @Test
+    public void test_3_isSignup() throws Exception
+    {
+        StringValidator stringValidator = new StringValidator();
+
+        assertTrue(StringValidator.isSignup("Tilmeld 0"));
+        assertTrue(StringValidator.isSignup("tilmeld 0"));
+        assertTrue(StringValidator.isSignup("tilmeld gruppe1"));
+        assertTrue(StringValidator.isSignup("TILMELD gruppe1"));
+        assertTrue(StringValidator.isSignup("TILMELD mig til gruppen"));
+        assertTrue(StringValidator.isSignup("TILMELD mig til gruppen sdlk lsdkjfoeut3489 wæjøaeg'aådpfg'søog´4'gsé4g´soe'´sdfåg'åo1'å½o'åp½o20å349+20"));
+
+        assertFalse(StringValidator.isSignup(null));
+        assertFalse(StringValidator.isSignup(""));
+        assertFalse(StringValidator.isSignup("TILMELD"));
+        assertFalse(StringValidator.isSignup("TILMELD "));
+        assertFalse(StringValidator.isSignup("Tilmeld"));
+        assertFalse(StringValidator.isSignup("Tilmeld "));
+        assertFalse(StringValidator.isSignup("tilmeld"));
+        assertFalse(StringValidator.isSignup("tilmeld "));
+        assertFalse(StringValidator.isSignup("TILMELDE"));
+        assertFalse(StringValidator.isSignup("Afmeld"));
+        assertFalse(StringValidator.isSignup("TILMELDE mig til gruppen lækæ kælkæalk sæda k 'daælsdk'ad la'sl kd'asldpwapod aæld29u1209 u40u3402u3"));
+    }
+    @Test
+    public void test_4_isResign() throws Exception
+    {
+        StringValidator stringValidator = new StringValidator();
+
+        assertTrue(StringValidator.isResign("Afmeld fghjkl hjkl"));
+        assertTrue(StringValidator.isResign("afmeld fghjkl hjkl"));
+        assertTrue(StringValidator.isResign("afmeld fghjkl"));
+        assertTrue(StringValidator.isResign("afmeld 0"));
+        assertTrue(StringValidator.isResign("afmeld gruppe1"));
+        assertTrue(StringValidator.isResign("AFMELD gruppe1"));
+        assertTrue(StringValidator.isResign("AFMELD mig til gruppen"));
+        assertTrue(StringValidator.isResign("AFMELD mig til gruppen sdlk lsdkjfoeut3489 wæjøaeg'aådpfg'søog´4'gsé4g´soe'´sdfåg'åo1'å½o'åp½o20å349+20"));
+
+        assertFalse(StringValidator.isResign(null));
+        assertFalse(StringValidator.isResign(""));
+        assertFalse(StringValidator.isResign("AFMELD"));
+        assertFalse(StringValidator.isResign("AFMELD "));
+        assertFalse(StringValidator.isResign("Afmeld"));
+        assertFalse(StringValidator.isResign("Afmeld "));
+        assertFalse(StringValidator.isResign("afmeld"));
+        assertFalse(StringValidator.isResign("afmeld "));
+        assertFalse(StringValidator.isResign("AFMELDE"));
+        assertFalse(StringValidator.isResign("Afmeld"));
+        assertFalse(StringValidator.isResign("AFMELDE mig til gruppen lækæ kælkæalk sæda k 'daælsdk'ad la'sl kd'asldpwapod aæld29u1209 u40u3402u3"));
     }
 }

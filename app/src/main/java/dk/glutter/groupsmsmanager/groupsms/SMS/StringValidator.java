@@ -66,6 +66,8 @@ public class StringValidator {
     public static boolean isSignup(String message)
     {
         words = null;
+        if (message == null)
+            return false;
         if (!message.isEmpty()) {
             if (message.length() > 1) {
                 String[] splitedMessage = message.split(" ");
@@ -86,6 +88,8 @@ public class StringValidator {
     // checks if message contains requested resign fraze
     public static boolean isResign(String message)
     {
+        if (message == null)
+            return false;
         words = null;
         if (!message.isEmpty()) {
             if (message.length() > 1) {
