@@ -142,4 +142,21 @@ public class ExampleInstrumentedTest {
         assertTrue(stringValidator.isGroupMessage("FOO this is a group message"));
 
     }
+
+    @Test
+    public void test_6_getCurrentGroup()
+    {
+        assertTrue(myGroups_.size() == 3);
+
+        String grIDFoo = myGroups_.get(0).getUniqueID();
+        String grIDGASik = myGroups_.get(1).getUniqueID();
+        MyGroup currentGrFoo =  stringValidator.getCurrentGroup("Foo this is a group message");
+        MyGroup currentGrGASik =  stringValidator.getCurrentGroup("GASIK this is a group message");
+
+        assertFalse(currentGrFoo == null);
+        assertFalse(currentGrGASik == null);
+        assertTrue(currentGrFoo.getUniqueID().equals(grIDFoo));
+        assertTrue(currentGrGASik.getUniqueID().equals(grIDGASik));
+
+    }
 }

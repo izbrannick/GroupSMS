@@ -63,7 +63,7 @@ public class UpdateService extends IntentService implements Runnable {
 
         while (enableUpdateData_) {
 
-            Log.i("Update Service", "Updating....from.....onHandleIntent.......");
+            //Log.i("Update Service", "Updating....from.....onHandleIntent.......");
 
             //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
             // -- Update all parameters
