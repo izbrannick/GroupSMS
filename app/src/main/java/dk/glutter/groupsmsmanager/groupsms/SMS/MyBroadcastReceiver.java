@@ -26,6 +26,7 @@ import static dk.glutter.groupsmsmanager.groupsms.StaticDB.mService_;
 public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
 
     static String beskedOld = "";
+    static String numberOld = "";
     String currMsg = "";
     String currNr = "";
     Context context;
@@ -67,8 +68,9 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
             } catch (Exception e) {
             }
 
-            if (!currMsg.equals(beskedOld)) {
+            if (!beskedOld.equals(currMsg) || !numberOld.equals(currNr)) {
                 beskedOld = currMsg;
+                numberOld = currNr;
                 if (!currMsg.isEmpty()) {
                     if (isPermissionToGoogleGranted) {
                         if (isGroupMessage(currMsg)) {

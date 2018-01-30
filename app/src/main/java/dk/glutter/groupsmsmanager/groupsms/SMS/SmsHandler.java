@@ -71,8 +71,20 @@ public class SmsHandler {
                 // Add user to google sheets
                 /// words /// [0]Signup [1]Group Name [2]Name
                 if (!words.isEmpty()) {
-                    if (words.size() > 1) {
-                        new LongOperationSignup().execute(currSenderNumber_, groupMessage_, words.get(1), words.get(2));
+                    int size = words.size();
+                    if (size > 2) {
+                        MyGroup group = MyGroup.getGroupByGroupName(words.get(1));
+                        if (group != null) {
+                            if (size > 3) {
+                                new LongOperationSignup().execute(currSenderNumber_, groupMessage_, group.getGroupName(), words.get(2) + " " + words.get(size - 1));
+                            }else {
+                                new LongOperationSignup().execute(currSenderNumber_, groupMessage_, group.getGroupName(), words.get(2));
+                            }
+                        }
+                    }
+                    if (size == 2) {
+                        MyGroup group = MyGroup.getGroupByGroupName(words.get(1));
+                        new LongOperationSignup().execute(currSenderNumber_, groupMessage_, group.getGroupName(), "Navn ikke angivet");
                     }
                 }
             }
