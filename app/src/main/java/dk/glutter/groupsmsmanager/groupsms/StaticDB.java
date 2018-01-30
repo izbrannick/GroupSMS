@@ -10,7 +10,6 @@ import java.util.List;
 
 public class StaticDB {
     public static String applicationName_ = "groupsmsmanager";
-    //public static String spreadsheetId = "1YJx7n2c8iqNXkcxe8eDh1y_ew9_gMOy3pKCTAFXlbI8";
     public static String spreadsheetId = "1S6zauh24Rba2udATaZaUPp2RIok4KyW_AxBC1soZAC8";
     public static int contactSheetId = 0;
     public static List<MyGroup> myGroups_;
