@@ -76,7 +76,6 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
                         if (isGroupMessage(currMsg)) {
                             if (mService_ != null) {
                                 groupMessage_ = currMsg;
-                                // TODO: (0) to be tested with broadcast + sheets
                                 currSenderNumber_ = currNr;
                             }
                         }

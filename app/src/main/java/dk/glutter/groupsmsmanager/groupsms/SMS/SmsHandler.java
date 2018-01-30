@@ -178,7 +178,6 @@ public class SmsHandler {
             String senderName = params[3];
 
 
-            //TODO: if contact is existing contact
             int position = -3;
             try {
                 position = SheetsHandler.getNumberRangePosition(spreadsheetId, contactsSheetRange, senderNumber);
@@ -204,6 +203,15 @@ public class SmsHandler {
             } catch (Exception e) {
                 Thread.interrupted();
                 Log.d("Exception", e.getMessage());
+            }
+
+            // ------ APPEND
+            try {
+                SheetsHandler.appendValue(spreadsheetId, messageLOGSheetRange, message);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             return "Executed";
@@ -264,6 +272,15 @@ public class SmsHandler {
             } catch (Exception e) {
                 Thread.interrupted();
                 Log.d("Exception", e.getMessage());
+            }
+
+            // ------ APPEND
+            try {
+                SheetsHandler.appendValue(spreadsheetId, messageLOGSheetRange, message);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             return "Executed";
