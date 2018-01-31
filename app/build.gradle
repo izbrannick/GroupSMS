@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     signingConfigs {
         config {
             keyAlias 'izbrannick'
@@ -58,7 +64,5 @@ dependencies {
         mavenCentral()
     }
     compile 'com.google.apis:google-api-services-drive:v2-rev295-1.23.0'
-    compile 'com.google.http-client:google-http-client-gson:1.19.0'
     compile 'com.google.android.gms:play-services-drive:11.8.0'
-    compile 'com.google.android.gms:play-services-auth:11.8.0'
 }

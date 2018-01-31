@@ -32,7 +32,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-public class DriveFile extends Activity {
+public class DriveAPIHandler extends Activity {
 
     private static final String TAG = "drive-quickstart";
     private static final int REQUEST_CODE_SIGN_IN = 0;

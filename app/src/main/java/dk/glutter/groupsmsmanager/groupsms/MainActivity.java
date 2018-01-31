@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import dk.glutter.groupsmsmanager.groupsms.API.DriveFile;
+import dk.glutter.groupsmsmanager.groupsms.API.DriveAPIHandler;
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -121,7 +121,7 @@ public class MainActivity extends Activity
                 mCallApiButton_drive.setEnabled(false);
                 mOutputText.setText("");
 
-                Intent intent = new Intent(getApplicationContext(), DriveFile.class);
+                Intent intent = new Intent(getApplicationContext(), DriveAPIHandler.class);
 
                 //startActivity(intent);
                 mCallApiButton_drive.setEnabled(true);
