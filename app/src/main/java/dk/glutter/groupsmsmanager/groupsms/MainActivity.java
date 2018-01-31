@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dk.glutter.groupsmsmanager.groupsms.API.DriveFile;
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -61,6 +62,7 @@ public class MainActivity extends Activity
     GoogleAccountCredential mCredential;
     public static TextView mOutputText;
     private Button mCallApiButton;
+    private Button mCallApiButton_drive;
     private Intent mServiceIntent;
     ProgressDialog mProgress;
     Context context;
@@ -71,6 +73,7 @@ public class MainActivity extends Activity
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
     private static final String BUTTON_TEXT = "Call Google Sheets API";
+    private static final String BUTTON_TEXT_DRIVE = "CREATE FILE";
     private static final String PREF_ACCOUNT_NAME = "glutterdroid@gmail.com";
     private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS};
 
@@ -95,6 +98,7 @@ public class MainActivity extends Activity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        // SHEETS API  BUTTON ---------------
         mCallApiButton = new Button(this);
         mCallApiButton.setText(BUTTON_TEXT);
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +111,23 @@ public class MainActivity extends Activity
             }
         });
         activityLayout.addView(mCallApiButton);
+
+        // DRIVE BUTTON ---------------
+        mCallApiButton_drive = new Button(this);
+        mCallApiButton_drive.setText(BUTTON_TEXT_DRIVE);
+        mCallApiButton_drive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallApiButton_drive.setEnabled(false);
+                mOutputText.setText("");
+
+                Intent intent = new Intent(getApplicationContext(), DriveFile.class);
+
+                //startActivity(intent);
+                mCallApiButton_drive.setEnabled(true);
+            }
+        });
+        activityLayout.addView(mCallApiButton_drive);
 
         mOutputText = new TextView(this);
         mOutputText.setLayoutParams(tlp);

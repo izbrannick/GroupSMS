@@ -33,6 +33,14 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".API.DriveFile"
+            android:parentActivityName=".MainActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <receiver android:name="dk.glutter.groupsmsmanager.groupsms.SMS.MyBroadcastReceiver" android:enabled="true" android:exported="true" android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
