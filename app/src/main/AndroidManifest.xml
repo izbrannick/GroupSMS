@@ -19,12 +19,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+
         <activity android:name="dk.glutter.groupsmsmanager.groupsms.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,15 +37,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".API.DriveAPIHandler"
+        <activity android:name=".API.CreateEmptyFileActivity"
             android:parentActivityName=".MainActivity">
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyArLcRfJNW4wXs3i4FOGiUhfHfcA9uzm58" />
         </activity>
 
-        <receiver android:name="dk.glutter.groupsmsmanager.groupsms.SMS.MyBroadcastReceiver" android:enabled="true" android:exported="true" android:permission="android.permission.BROADCAST_SMS">
+        <receiver android:name=".SMS.MyBroadcastReceiver" android:enabled="true" android:exported="true" android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="999">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
                 <action android:name="android.provider.Telephony.SMS_DELIVER"/>
@@ -54,8 +57,9 @@
             android:exported="false"/>
 
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyArLcRfJNW4wXs3i4FOGiUhfHfcA9uzm58" />
+
     </application>
 
 </manifest>

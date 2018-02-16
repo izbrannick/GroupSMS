@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import dk.glutter.groupsmsmanager.groupsms.API.DriveAPIHandler;
+import dk.glutter.groupsmsmanager.groupsms.API.CreateEmptyFileActivity;
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -55,6 +55,7 @@ import static dk.glutter.groupsmsmanager.groupsms.StaticDB.isPermissionToGoogleG
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.mService_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myContacts_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetId;
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetName;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.updateUIRefreshRate_;
 
 public class MainActivity extends Activity
@@ -85,6 +86,7 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
 
         LinearLayout activityLayout = new LinearLayout(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -104,6 +106,7 @@ public class MainActivity extends Activity
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mServiceIntent = new Intent(context, UpdateService.class);
                 mCallApiButton.setEnabled(false);
                 mOutputText.setText("");
                 getResultsFromApi();
@@ -119,11 +122,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View v) {
                 mCallApiButton_drive.setEnabled(false);
-                mOutputText.setText("");
+                mOutputText.setText("Activating google drive functions...");
 
-                Intent intent = new Intent(getApplicationContext(), DriveAPIHandler.class);
+                Intent intent = new Intent(getApplicationContext(), CreateEmptyFileActivity.class);
 
-                //startActivity(intent);
+                startActivity(intent);
                 mCallApiButton_drive.setEnabled(true);
             }
         });
@@ -149,9 +152,6 @@ public class MainActivity extends Activity
                 .setBackOff(new ExponentialBackOff());
 
         checkPermissions();
-
-        context = this;
-        mServiceIntent = new Intent(context, UpdateService.class);
 
     }
 
