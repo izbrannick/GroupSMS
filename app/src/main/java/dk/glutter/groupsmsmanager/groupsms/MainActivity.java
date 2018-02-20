@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import dk.glutter.groupsmsmanager.groupsms.API.CreateEmptyFileActivity;
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -55,7 +54,6 @@ import static dk.glutter.groupsmsmanager.groupsms.StaticDB.isPermissionToGoogleG
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.mService_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myContacts_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetId;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetName;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.updateUIRefreshRate_;
 
 public class MainActivity extends Activity
@@ -115,6 +113,15 @@ public class MainActivity extends Activity
         });
         activityLayout.addView(mCallApiButton);
 
+
+        // TODO's 1)input field  2)store id in sharedPrefrences  3)check if input id is valid  4)change btn to update ID  6)write some tests to written code
+
+
+
+
+
+
+
         // DRIVE BUTTON ---------------
         mCallApiButton_drive = new Button(this);
         mCallApiButton_drive.setText(BUTTON_TEXT_DRIVE);
@@ -124,9 +131,9 @@ public class MainActivity extends Activity
                 mCallApiButton_drive.setEnabled(false);
                 mOutputText.setText("Activating google drive functions...");
 
-                Intent intent = new Intent(getApplicationContext(), CreateEmptyFileActivity.class);
+                //Intent intent = new Intent(getApplicationContext(), CreateEmptyFileActivity.class);
+                //startActivity(intent);
 
-                startActivity(intent);
                 mCallApiButton_drive.setEnabled(true);
             }
         });
@@ -478,7 +485,7 @@ public class MainActivity extends Activity
                 mOutputText.setText(TextUtils.join("\n", output));
 
                 startService(mServiceIntent);
-                // TODO: Update UI couses crashes, TO FIX....
+                // TODO: Update UI couses crashes, TO FIX...
                 //uiUpdateThread.start();
             }
         }
@@ -507,7 +514,7 @@ public class MainActivity extends Activity
 
     Thread uiUpdateThread = new Thread() {
 
-        @Override
+            @Override
         public void run() {
             try {
                 while (enableUpdateUI_) {
