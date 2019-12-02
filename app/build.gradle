@@ -11,7 +11,7 @@ android {
         config {
             keyAlias 'izbrannick'
             keyPassword '...'
-            storeFile file('C:/Users/qwerty/.android/android.jks')
+            storeFile file('//.android/android.jks')
             storePassword '...'
         }
     }

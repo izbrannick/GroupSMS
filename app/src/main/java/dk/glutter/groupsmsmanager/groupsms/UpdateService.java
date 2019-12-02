@@ -103,15 +103,6 @@ public class UpdateService extends IntentService implements Runnable {
                 e.printStackTrace();
             }
 
-            // Check for group message
-            if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
-                groupMessageOld_ = groupMessage_;
-                if (StringValidator.isGroupMessage(groupMessage_)) {
-                    SmsHandler smsHandler = new SmsHandler();
-                    smsHandler.startSmsTask();
-                }
-            }
-
             try {
                 Thread.sleep(updateDataRefreshRate_);
             } catch (InterruptedException e) {

@@ -47,15 +47,7 @@ import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.applicationName_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.contactsSheetRange;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.enableUpdateUI_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.groupMessage_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.isPermissionToGoogleGranted;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.mService_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myContacts_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetId;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.updateUIRefreshRate_;
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.*;
 
 public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {

@@ -73,24 +73,10 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
                 numberOld = currNr;
                 if (!currMsg.isEmpty()) {
                     if (isPermissionToGoogleGranted) {
-                        if (isGroupMessage(currMsg)) {
-                            if (mService_ != null) {
-                                groupMessage_ = currMsg;
-                                currSenderNumber_ = currNr;
-                            }
-                        }
-                        if (isSignup(currMsg)) {
                             groupMessage_ = currMsg;
                             currSenderNumber_ = currNr;
                             SmsHandler smsHandler = new SmsHandler();
-                            smsHandler.startSmsTask();
-                        }
-                        if (isResign(currMsg)) {
-                            groupMessage_ = currMsg;
-                            currSenderNumber_ = currNr;
-                            SmsHandler smsHandler = new SmsHandler();
-                            smsHandler.startSmsTask();
-                        }
+                            smsHandler.startAppendTask(currMsg);
                     }
                 }
             }
