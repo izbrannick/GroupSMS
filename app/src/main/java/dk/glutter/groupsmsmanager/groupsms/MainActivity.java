@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import dk.glutter.groupsmsmanager.groupsms.API.DriveAPIHandler;
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -103,23 +102,6 @@ public class MainActivity extends Activity
             }
         });
         activityLayout.addView(mCallApiButton);
-
-        // DRIVE BUTTON ---------------
-        mCallApiButton_drive = new Button(this);
-        mCallApiButton_drive.setText(BUTTON_TEXT_DRIVE);
-        mCallApiButton_drive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallApiButton_drive.setEnabled(false);
-                mOutputText.setText("");
-
-                Intent intent = new Intent(getApplicationContext(), DriveAPIHandler.class);
-
-                //startActivity(intent);
-                mCallApiButton_drive.setEnabled(true);
-            }
-        });
-        activityLayout.addView(mCallApiButton_drive);
 
         mOutputText = new TextView(this);
         mOutputText.setLayoutParams(tlp);
@@ -428,8 +410,12 @@ public class MainActivity extends Activity
         public List<String> appendSheetApi() throws IOException {
 
             groupMessage_ = "Call Google Sheets API Button Pressed";
+            List<String> messages = new ArrayList<>();
+            messages.add("1");
+            messages = SheetsHandler.getAllMessages(spreadsheetId, messagesSheetRange);
+            messages.add("2");
 
-            return null;
+            return messages;
         }
 
         /**
@@ -439,14 +425,12 @@ public class MainActivity extends Activity
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            List<MyContact> contacs = SheetsHandler.getAllContacs(spreadsheetId, contactsSheetRange);
 
-            List<String> contacsInfo = new ArrayList<>();
+            List<String> messages = SheetsHandler.getAllMessages(spreadsheetId, messageLOGSheetRange);
 
-            for (MyContact c : contacs) {
-                contacsInfo.add( c.getName() + "  " + c.getGroups() );
-            }
-            return contacsInfo;
+            SheetsHandler.appendValue(spreadsheetId, messageLOGSheetRange, "Message from mr droid");
+
+            return messages;
         }
 
         public List<String> getAndAppend() throws IOException {
@@ -509,14 +493,12 @@ public class MainActivity extends Activity
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (myContacts_ != null) {
                                 // update here!
                                 try {
-                                    mOutputText.setText(TextUtils.join("\n", myContacts_));
+                                    mOutputText.setText("myContacts_zz");
                                 } catch (Exception r) {
                                     mOutputText.setText(" ... :(( - Øv bøv");
                                 }
-                            }
                         }
                     });
                     Thread.sleep(updateUIRefreshRate_);

@@ -1,29 +1,23 @@
 package dk.glutter.groupsmsmanager.groupsms.SMS;
 
 /**
- * Created by u321424 on 09-11-2016.
+ * Modifyed by glutter on 12-12-2019.
  */
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
-
-import static dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator.isGroupMessage;
-import static dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator.isResign;
-import static dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator.isSignup;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.*;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.currSenderNumber_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.groupMessage_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.isPermissionToGoogleGranted;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.mService_;
 
 /**
- * Created by luther on 02/04/15.
+ * Created by glutter on 02/04/15.
  */
-public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
+public class MyBroadcastReceiver extends BroadcastReceiver {
 
     static String beskedOld = "";
     static String numberOld = "";
@@ -34,14 +28,23 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+
+        String sds = intent.getAction();
+
+        Toast.makeText(context.getApplicationContext(), sds,
+                Toast.LENGTH_LONG).show();
+
         if (intent.getAction().equals(
                 "android.provider.Telephony.SMS_DELIVERED")) {
             Toast.makeText(context.getApplicationContext(), "SMS_DELIVERED",
                     Toast.LENGTH_LONG).show();
 
         }
-        if (intent.getAction().equals(
-                "android.provider.Telephony.SMS_RECEIVED")) {
+        if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED") || intent.getAction().equals("android.provider.Telephony.SMS_DELIVER")) {
+
+            Toast.makeText(context.getApplicationContext(), "SMS_RECIVED",
+                    Toast.LENGTH_LONG).show();
 
             SmsMessage[] msg = null;
             this.context = context;
@@ -72,12 +75,12 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
                 beskedOld = currMsg;
                 numberOld = currNr;
                 if (!currMsg.isEmpty()) {
-                    if (isPermissionToGoogleGranted) {
+                    //if (isPermissionToGoogleGranted) {
                             groupMessage_ = currMsg;
                             currSenderNumber_ = currNr;
                             SmsHandler smsHandler = new SmsHandler();
                             smsHandler.startAppendTask(currMsg);
-                    }
+                    //}
                 }
             }
         }

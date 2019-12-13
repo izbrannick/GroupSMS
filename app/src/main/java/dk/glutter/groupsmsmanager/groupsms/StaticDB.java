@@ -13,8 +13,6 @@ public class StaticDB {
     public static String spreadsheetId = "1YJx7n2c8iqNXkcxe8eDh1y_ew9_gMOy3pKCTAFXlbI8"; // LME
     //public static String spreadsheetId = "1S6zauh24Rba2udATaZaUPp2RIok4KyW_AxBC1soZAC8"; // TEST
     public static int contactSheetId = 0;
-    public static List<MyGroup> myGroups_;
-    public static List<MyContact> myContacts_;
     public static String groupMessage_ = "";
     public static String groupMessageOld_ = "";
     public static com.google.api.services.sheets.v4.Sheets mService_ = null;

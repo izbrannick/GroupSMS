@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.google.api.services.sheets.v4.model.AppendValuesResponse;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +11,8 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
-import dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator;
 
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myGroups_;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetId;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

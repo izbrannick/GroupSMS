@@ -9,22 +9,12 @@ import android.os.AsyncTask;
 import android.telephony.SmsManager;
 import android.util.Log;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
-import dk.glutter.groupsmsmanager.groupsms.MyContact;
-import dk.glutter.groupsmsmanager.groupsms.MyGroup;
 
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.contactsSheetRange;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.currSenderNumber_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.groupMessage_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.messageLOGSheetRange;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.messagesSheetRange;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myContacts_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetId;
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.words;
 
 /**
  * Created by u321424 on 07-11-2016.

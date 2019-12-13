@@ -10,8 +10,6 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
-import dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator;
-
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myGroups_;
 import static org.junit.Assert.*;
 

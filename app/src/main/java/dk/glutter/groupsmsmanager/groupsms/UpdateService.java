@@ -6,7 +6,6 @@ package dk.glutter.groupsmsmanager.groupsms;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
-import dk.glutter.groupsmsmanager.groupsms.SMS.SmsHandler;
-import dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator;
 
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.*;
 
@@ -75,21 +72,6 @@ public class UpdateService extends IntentService implements Runnable {
 
             // -- Update timestamp
             currentTimeStamp_ = getCurrentTimeStamp();
-
-            // -- Update Contacts
-            try {
-                myContacts_ = SheetsHandler.getAllContacs(spreadsheetId, contactsSheetRange);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // -- Update Groups
-            //    1 - Create groups
-            try {
-                myGroups_ = new ArrayList<>(SheetsHandler.getAllGroups(spreadsheetId, groupsSheetRange));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             // Update Message From Sheets
             try {
