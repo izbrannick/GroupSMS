@@ -12,11 +12,6 @@ import java.util.ArrayList;
 
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 
-import static dk.glutter.groupsmsmanager.groupsms.StaticDB.myGroups_;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -27,7 +22,7 @@ public class SheetsHandlerInstrumentedTest {
 
     public ArrayList myGroups;
     public Context appContext;
-    public StringValidator stringValidator;
+    //public StringValidator stringValidator;
     public SheetsHandler sheetsHandler;
 
     String test_spreadsheetId = "1S6zauh24Rba2udATaZaUPp2RIok4KyW_AxBC1soZAC8";
@@ -42,6 +37,7 @@ public class SheetsHandlerInstrumentedTest {
         // Context of the app under test.
         appContext = InstrumentationRegistry.getTargetContext();
 
+        /*
         stringValidator = new StringValidator();
         myGroups = new ArrayList<>();
 
@@ -54,6 +50,7 @@ public class SheetsHandlerInstrumentedTest {
         myGroups.add(groupBAZ);
 
         myGroups_ = myGroups;
+        */
 
 
         sheetsHandler = new SheetsHandler();
