@@ -29,12 +29,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
-        String sds = intent.getAction();
-
-        Toast.makeText(context.getApplicationContext(), sds,
-                Toast.LENGTH_LONG).show();
-
         if (intent.getAction().equals(
                 "android.provider.Telephony.SMS_DELIVERED")) {
             Toast.makeText(context.getApplicationContext(), "SMS_DELIVERED",
@@ -46,7 +40,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             Toast.makeText(context.getApplicationContext(), "SMS_RECIVED",
                     Toast.LENGTH_LONG).show();
 
-            SmsMessage[] msg = null;
+            SmsMessage[] msg;
             this.context = context;
 
             Bundle bundle = intent.getExtras();
@@ -75,12 +69,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 beskedOld = currMsg;
                 numberOld = currNr;
                 if (!currMsg.isEmpty()) {
-                    //if (isPermissionToGoogleGranted) {
-                            groupMessage_ = currMsg;
-                            currSenderNumber_ = currNr;
-                            SmsHandler smsHandler = new SmsHandler();
-                            smsHandler.startAppendTask(currMsg);
-                    //}
+                    groupMessage_ = currMsg;
+                    currSenderNumber_ = currNr;
+                    SmsHandler smsHandler = new SmsHandler();
+                    smsHandler.startAppendTask(currMsg);
                 }
             }
         }
