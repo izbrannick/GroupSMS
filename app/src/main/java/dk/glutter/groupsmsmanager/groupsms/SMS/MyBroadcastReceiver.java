@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.currSenderNumber_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.groupMessage_;
@@ -69,9 +70,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                     currMsg = bodyText.toString();
                 }
             } catch (Exception e) {
+                Log.e("onReceive blooper", e.getMessage());
             }
 
             if (!beskedOld.equals(currMsg) || !numberOld.equals(currNr)) {
+                Log.i("Not an old message", currMsg);
                 beskedOld = currMsg;
                 numberOld = currNr;
                 if (!currMsg.isEmpty()) {

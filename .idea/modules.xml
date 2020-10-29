@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GroupSMS20.iml" filepath="$PROJECT_DIR$/GroupSMS20.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/GroupSMS20-app.iml" filepath="$PROJECT_DIR$/app/GroupSMS20-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GroupSMS2020.iml" filepath="$PROJECT_DIR$/.idea/modules/GroupSMS2020.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GroupSMS2020.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GroupSMS2020.app.iml" />
     </modules>
   </component>
 </project>

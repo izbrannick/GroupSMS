@@ -1,6 +1,8 @@
 package dk.glutter.groupsmsmanager.groupsms.API;
 
 
+import android.icu.util.Calendar;
+
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
 import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetResponse;
@@ -12,7 +14,10 @@ import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
+import java.security.Timestamp;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.applicationName_;
@@ -42,6 +47,8 @@ import static dk.glutter.groupsmsmanager.groupsms.StaticDB.updateUIRefreshRate_;
 
 public class SheetsHandler {
 
+
+
     /**
      * Timestamp is added in the next column
      * | value || timestamp |
@@ -49,8 +56,12 @@ public class SheetsHandler {
      */
     public static AppendValuesResponse appendValue(String sheetId, String range, String value)
     {
+        Date currentTime = new Date();
+        
         List<Object> results = new ArrayList<>();
         results.add(value);
+        results.add(" : " + currentTime.toString());
+
         List<List<Object>> resultsInResults = new ArrayList<>();
         resultsInResults.add(results);
 
