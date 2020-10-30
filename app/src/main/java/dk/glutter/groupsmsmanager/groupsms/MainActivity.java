@@ -428,7 +428,7 @@ public class MainActivity extends Activity
 
             List<String> messages = SheetsHandler.getAllMessages(spreadsheetId, messageLOGSheetRange);
 
-            SheetsHandler.appendValue(spreadsheetId, messageLOGSheetRange, "Message from mr droid");
+            SheetsHandler.appendValue(spreadsheetId, messageLOGSheetRange, "SMS Phone is up and running");
 
             return messages;
         }
@@ -455,7 +455,7 @@ public class MainActivity extends Activity
 
                 startService(mServiceIntent);
                 // TODO: Update UI couses crashes, TO FIX....
-                //uiUpdateThread.start();
+                uiUpdateThread.start();
             }
         }
 
@@ -487,15 +487,23 @@ public class MainActivity extends Activity
         public void run() {
             try {
                 while (enableUpdateUI_) {
+                    List<String> messages = new ArrayList<>();
 
                     Log.i("Update Service", "Updating....UI");
+                    try {
+                        messages = SheetsHandler.getAllMessages(spreadsheetId, messageLOGSheetRange);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
+
+                    final List<String> finalMessages = messages;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                                 // update here!
                                 try {
-                                    mOutputText.setText("myContacts_zz");
+                                    mOutputText.setText(finalMessages.toString());
                                 } catch (Exception r) {
                                     mOutputText.setText(" ... :(( - Øv bøv");
                                 }
