@@ -12,8 +12,11 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
+
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.activateByIncomingSms;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.currSenderNumber_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.groupMessage_;
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.isPermissionToGoogleGranted;
 
 /**
  * Created by glutter on 02/04/15.
@@ -29,7 +32,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
 
         String sds = intent.getAction();
 
@@ -78,7 +80,11 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 beskedOld = currMsg;
                 numberOld = currNr;
                 if (!currMsg.isEmpty()) {
-                    //if (isPermissionToGoogleGranted) {
+                    if (!isPermissionToGoogleGranted) {
+                        Log.i("Not GRANTED :((", currMsg);
+                        Log.i("GRANTING...", currMsg);
+                        activateByIncomingSms = true;
+                    }
                             groupMessage_ = currMsg;
                             currSenderNumber_ = currNr;
                             SmsHandler smsHandler = new SmsHandler();

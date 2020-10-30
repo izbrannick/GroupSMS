@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GroupSMS</string>
+    <string name="spreadsheetID">1YJx7n2c8iqNXkcxe8eDh1y_ew9_gMOy3pKCTAFXlbI8</string>
+    <string name="signup">Tilmeld</string>
 </resources>

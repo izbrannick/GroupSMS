@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -53,11 +54,10 @@ public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
     GoogleAccountCredential mCredential;
     public static TextView mOutputText;
-    private Button mCallApiButton;
+    //private Button mCallApiButton;
     private Button mCallApiButton_drive;
     private Intent mServiceIntent;
-    ProgressDialog mProgress;
-    Context context;
+    //ProgressDialog mProgress;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -90,20 +90,6 @@ public class MainActivity extends Activity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        // SHEETS API  BUTTON ---------------
-        mCallApiButton = new Button(this);
-        mCallApiButton.setText(BUTTON_TEXT);
-        mCallApiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallApiButton.setEnabled(false);
-                mOutputText.setText("");
-                getResultsFromApi();
-                mCallApiButton.setEnabled(true);
-            }
-        });
-        activityLayout.addView(mCallApiButton);
-
         mOutputText = new TextView(this);
         mOutputText.setLayoutParams(tlp);
         mOutputText.setPadding(16, 16, 16, 16);
@@ -112,21 +98,9 @@ public class MainActivity extends Activity
         mOutputText.setText(
                 "Click the \'" + BUTTON_TEXT + "\' button to test the API.");
         activityLayout.addView(mOutputText);
-
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Calling Google Sheets API ...");
-
         setContentView(activityLayout);
 
-        // Initialize credentials and service object.
-        mCredential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff());
-
-        checkPermissions();
-
-        context = this;
-        mServiceIntent = new Intent(context, UpdateService.class);
+        uiUpdateThread.start();
 
     }
 
@@ -441,28 +415,23 @@ public class MainActivity extends Activity
 
         @Override
         protected void onPreExecute() {
-            mOutputText.setText("");
-            mProgress.show();
+            mOutputText.setText("pre execute...");
         }
 
         @Override
         protected void onPostExecute(List<String> output) {
-            mProgress.hide();
             if (output == null || output.size() == 0) {
                 mOutputText.setText("No results returned.");
             } else {
                 output.add(0, "Data retrieved using the Google Sheets API:");
-                mOutputText.setText(TextUtils.join("\n", output));
-
+                mOutputText.setText("wait for it..." + "\n");
+                //mOutputText.setText(TextUtils.join("\n", output));
                 startService(mServiceIntent);
-                // TODO: Update UI couses crashes, TO FIX....
-                uiUpdateThread.start();
             }
         }
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -486,34 +455,60 @@ public class MainActivity extends Activity
 
         @Override
         public void run() {
-            try {
-                while (enableUpdateUI_) {
-                    List<String> messages = new ArrayList<>();
 
-                    Log.i("Update Service", "Updating....UI");
-                    try {
-                        messages = SheetsHandler.getAllMessages(spreadsheetId, messageLOGSheetRange);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            if (!isPermissionToGoogleGranted)
+            {
+                Log.i("PermissionToGoogle", "Not granted....");
+                Looper.prepare();
 
+                // Initialize credentials and service object.
+                mCredential = GoogleAccountCredential.usingOAuth2(
+                        getApplicationContext(), Arrays.asList(SCOPES))
+                        .setBackOff(new ExponentialBackOff());
 
-                    final List<String> finalMessages = messages;
-                    runOnUiThread(new Runnable() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void run() {
-                            // update here!
-                            try {
-                                mOutputText.setText("----- Latest 3x messages -----" + "\n" + finalMessages.get(finalMessages.size() - 1) + "\n" + finalMessages.get(finalMessages.size() - 2) + "\n" + finalMessages.get(finalMessages.size() - 3));
-                            } catch (Exception r) {
-                                mOutputText.setText(" Something went wrong... :(( - Øv bøv");
-                            }
-                        }
-                    });
-                    Thread.sleep(updateUIRefreshRate_);
+                checkPermissions();
+                mServiceIntent = new Intent(MainActivity.this, UpdateService.class);
+
+                mOutputText.setText("....");
+                getResultsFromApi();
+                activateByIncomingSms = false;
+                try {
+                    Thread.sleep(9000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
+            }
+
+            // f there is access to google API, run
+            if (isPermissionToGoogleGranted) {
+                try {
+                    while (enableUpdateUI_) {
+                        List<String> messages = new ArrayList<>();
+
+                        Log.i("Update Service", "Updating....UI");
+                        try {
+                            messages = SheetsHandler.getAllMessages(spreadsheetId, messageLOGSheetRange);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        final List<String> finalMessages = messages;
+                        runOnUiThread(new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                // update here!
+                                try {
+                                    mOutputText.setText(TextUtils.join("\n", finalMessages) );
+                                } catch (Exception r) {
+                                    mOutputText.setText(" Something went wrong... :(( - Øv bøv");
+                                }
+                            }
+                        });
+                        Thread.sleep(updateUIRefreshRate_);
+                    }
+                } catch (InterruptedException e) {
+                }
             }
         }
     };
