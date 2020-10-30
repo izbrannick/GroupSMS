@@ -56,11 +56,9 @@ public class SheetsHandler {
      */
     public static AppendValuesResponse appendValue(String sheetId, String range, String value)
     {
-        Date currentTime = new Date();
-        
         List<Object> results = new ArrayList<>();
         results.add(value);
-        results.add(" : " + currentTime.toString());
+        results.add(currentTimeStamp_);
 
         List<List<Object>> resultsInResults = new ArrayList<>();
         resultsInResults.add(results);
@@ -187,7 +185,7 @@ public class SheetsHandler {
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
         List<List<Object>> values = response.getValues();
 
-        List<Object> prameterValues = new ArrayList<>();
+        List<Object> parameterValues = new ArrayList<>();
 
         if (values != null) {
             for (List row : values) {
@@ -247,7 +245,7 @@ public class SheetsHandler {
                 }
             }
         }
-        return prameterValues;
+        return parameterValues;
     }
 
     /**

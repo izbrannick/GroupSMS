@@ -59,11 +59,6 @@ public class UpdateService extends IntentService implements Runnable {
     public void run() {
 
         while (enableUpdateData_) {
-
-            //Log.i("Update Service", "Updating....from.....onHandleIntent.......");
-
-            //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
-            // -- Update all parameters
             try {
                 SheetsHandler.updateParametersInStaticDB(spreadsheetId, pmdbSheetRange);
             } catch (IOException e) {
@@ -99,7 +94,7 @@ public class UpdateService extends IntentService implements Runnable {
     public static String getCurrentTimeStamp() {
         try {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String currentDateTime = dateFormat.format(new Date()); // Find todays date
 
             return currentDateTime;
