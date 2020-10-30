@@ -2,6 +2,7 @@ package dk.glutter.groupsmsmanager.groupsms;
 
 import android.Manifest;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -481,7 +482,7 @@ public class MainActivity extends Activity
         }
     }
 
-    Thread uiUpdateThread = new Thread() {
+    final Thread uiUpdateThread = new Thread() {
 
         @Override
         public void run() {
@@ -499,14 +500,15 @@ public class MainActivity extends Activity
 
                     final List<String> finalMessages = messages;
                     runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void run() {
-                                // update here!
-                                try {
-                                    mOutputText.setText(finalMessages.toString());
-                                } catch (Exception r) {
-                                    mOutputText.setText(" ... :(( - Øv bøv");
-                                }
+                            // update here!
+                            try {
+                                mOutputText.setText("----- Latest 3x messages -----" + "\n" + finalMessages.get(finalMessages.size() - 1) + "\n" + finalMessages.get(finalMessages.size() - 2) + "\n" + finalMessages.get(finalMessages.size() - 3));
+                            } catch (Exception r) {
+                                mOutputText.setText(" Something went wrong... :(( - Øv bøv");
+                            }
                         }
                     });
                     Thread.sleep(updateUIRefreshRate_);
