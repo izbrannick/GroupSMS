@@ -3,6 +3,9 @@ package dk.glutter.groupsmsmanager.groupsms;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.glutter.groupsmsmanager.groupsms.SMS.MyContact;
+import dk.glutter.groupsmsmanager.groupsms.SMS.MyGroup;
+
 /**
  * Created by luther on 10/11/2016.
  * This is SIMPLE Static DB - KISS
@@ -33,5 +36,7 @@ public class StaticDB {
     public static ArrayList<String> words; /// [0]Signup [1]Group Name [2]Name
     public static String currentCountryCode = "45"; // + // 00 //
     public static boolean activateByIncomingSms = false;
+    public static List<MyGroup> myGroups_;
+    public static List<MyContact> myContacts_;
 
 }

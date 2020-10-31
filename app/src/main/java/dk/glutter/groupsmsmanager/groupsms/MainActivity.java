@@ -54,10 +54,7 @@ public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
     GoogleAccountCredential mCredential;
     public static TextView mOutputText;
-    //private Button mCallApiButton;
-    private Button mCallApiButton_drive;
     private Intent mServiceIntent;
-    //ProgressDialog mProgress;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;

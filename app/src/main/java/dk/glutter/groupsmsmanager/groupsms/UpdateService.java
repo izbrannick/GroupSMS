@@ -6,6 +6,7 @@ package dk.glutter.groupsmsmanager.groupsms;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
+import dk.glutter.groupsmsmanager.groupsms.SMS.SmsHandler;
+import dk.glutter.groupsmsmanager.groupsms.SMS.StringValidator;
 
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.*;
 
@@ -59,6 +62,11 @@ public class UpdateService extends IntentService implements Runnable {
     public void run() {
 
         while (enableUpdateData_) {
+
+            //Log.i("Update Service", "Updating....from.....onHandleIntent.......");
+
+            //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
+            // -- Update all parameters
             try {
                 SheetsHandler.updateParametersInStaticDB(spreadsheetId, pmdbSheetRange);
             } catch (IOException e) {
@@ -67,6 +75,21 @@ public class UpdateService extends IntentService implements Runnable {
 
             // -- Update timestamp
             currentTimeStamp_ = getCurrentTimeStamp();
+
+            // -- Update Contacts
+            try {
+                myContacts_ = SheetsHandler.getAllContacs(spreadsheetId, contactsSheetRange);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // -- Update Groups
+            //    1 - Create groups
+            try {
+                myGroups_ = new ArrayList<>(SheetsHandler.getAllGroups(spreadsheetId, groupsSheetRange));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             // Update Message From Sheets
             try {
@@ -78,6 +101,15 @@ public class UpdateService extends IntentService implements Runnable {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+            // Check for group message
+            if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
+                groupMessageOld_ = groupMessage_;
+                if (StringValidator.isGroupMessage(groupMessage_)) {
+                    SmsHandler smsHandler = new SmsHandler();
+                    smsHandler.startSmsTask();
+                }
             }
 
             try {
@@ -94,7 +126,7 @@ public class UpdateService extends IntentService implements Runnable {
     public static String getCurrentTimeStamp() {
         try {
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String currentDateTime = dateFormat.format(new Date()); // Find todays date
 
             return currentDateTime;
