@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import dk.glutter.groupsmsmanager.groupsms.API.SheetsHandler;
 
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.spreadsheetId;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -25,7 +27,7 @@ public class SheetsHandlerInstrumentedTest {
     //public StringValidator stringValidator;
     public SheetsHandler sheetsHandler;
 
-    String test_spreadsheetId = "1S6zauh24Rba2udATaZaUPp2RIok4KyW_AxBC1soZAC8";
+    String test_spreadsheetId = spreadsheetId;
     String test_spreadsheetArkId = "1991659608";
 
     /**

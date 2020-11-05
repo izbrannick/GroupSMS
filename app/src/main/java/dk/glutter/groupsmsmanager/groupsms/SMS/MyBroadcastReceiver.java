@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.activateByIncomingSms;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.currSenderNumber_;
+import static dk.glutter.groupsmsmanager.groupsms.StaticDB.currentTimeStamp_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.groupMessage_;
 import static dk.glutter.groupsmsmanager.groupsms.StaticDB.isPermissionToGoogleGranted;
+import static dk.glutter.groupsmsmanager.groupsms.UpdateService.getCurrentTimeStamp;
 
 /**
  * Created by glutter on 02/04/15.
@@ -74,6 +76,9 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 Log.e("onReceive blooper", e.getMessage());
             }
+
+            // -- Update timestamp
+            currentTimeStamp_ = getCurrentTimeStamp();
 
             if (!beskedOld.equals(currMsg) || !numberOld.equals(currNr)) {
                 Log.i("Not an old message", currMsg);
