@@ -78,7 +78,7 @@ public class UpdateService extends IntentService implements Runnable {
 
             // -- Update Contacts
             try {
-                myContacts_ = SheetsHandler.getAllContacs(spreadsheetId, contactsSheetRange);
+                myContacts_ = SheetsHandler.getAllContacts(spreadsheetId, contactsSheetRange);
             } catch (IOException e) {
                 e.printStackTrace();
             }

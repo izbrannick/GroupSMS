@@ -260,15 +260,14 @@ public class SheetsHandler {
      */
     public static List<String> getAllMessages(String spreadSheetId, String range) throws IOException
     {
-        List<String> myGroups = new ArrayList<>();
+        List<String> messages = new ArrayList<>();
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
                 try {
-                    //myGroups.add(row.get(0));
-                    String gr = new String((String) row.get(0));
-                    myGroups.add(gr);
+                    String message = "" + row.get(0);
+                    messages.add(message);
                 }catch (Exception r)
                 {
                     r.printStackTrace();
@@ -276,7 +275,7 @@ public class SheetsHandler {
                 }
             }
         }
-        return myGroups;
+        return messages;
     }
 
     /**
@@ -286,7 +285,7 @@ public class SheetsHandler {
      * @throws IOException
      * @param range example = "Contact!A2:F"
      */
-    public static List<MyContact> getAllContacs(String spreadSheetId, String range) throws IOException {
+    public static List<MyContact> getAllContacts(String spreadSheetId, String range) throws IOException {
 
         List<MyContact> myContacts = new ArrayList<>();
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
@@ -369,7 +368,6 @@ public class SheetsHandler {
         if (values != null) {
             for (List row : values) {
                 try {
-                    //myGroups.add(row.get(0));
                     MyGroup gr = new MyGroup((String) row.get(0));
                     myGroups.add(gr);
                 }catch (Exception r)
